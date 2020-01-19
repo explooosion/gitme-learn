@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/pages/activity.dart';
+import 'package:my_app/pages/issue.dart';
+import 'package:my_app/pages/repo.dart';
 
 class MainPage extends StatelessWidget {
   @override
@@ -26,18 +29,35 @@ class MainPage extends StatelessWidget {
         ),
         body: TabBarView(children: <Widget>[
           HomePage(),
-          Text('Repo'),
-          Text('Activity'),
-          Text('Issues'),
+          RepoPage(),
+          ActivityPage(),
+          IssuePage(),
         ]),
         drawer: Drawer(
           child: ListView(
-            padding: EdgeInsets.zero,
+            // padding: EdgeInsets.zero,
             children: <Widget>[
               ListTile(
                 title: Text('sign out'),
-                onTap: () {
-                  Navigator.pushReplacementNamed(context, "/login");
+                onTap: () async {
+                  await showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (context) => AlertDialog(
+                      content: Text("Are you sure to exit current account."),
+                      actions: <Widget>[
+                        FlatButton(
+                          child: Text("Cancel"),
+                          onPressed: () => Navigator.pop(context),
+                        ),
+                        FlatButton(
+                          child: Text("OK"),
+                          onPressed: () => Navigator.pushNamedAndRemoveUntil(
+                              context, "/login", ModalRoute.withName('/')),
+                        ),
+                      ],
+                    ),
+                  );
                 },
               ),
             ],
