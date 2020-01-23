@@ -11,8 +11,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
-      ),
+          primarySwatch: Colors.blueGrey,
+          buttonTheme: ButtonThemeData(
+            textTheme: ButtonTextTheme.primary,
+          )),
       routes: {
         MyAppRoutes.login: (context) => LoginPage(),
         MyAppRoutes.home: (context) => MainPage(),

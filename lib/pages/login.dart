@@ -1,11 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<StatefulWidget> {
+  bool isHidden = true;
+
+  void _toggleVisibility() {
+    setState(() {
+      isHidden = !isHidden;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return ProgressHUD(
       backgroundColor: Colors.black87,
+      textStyle: TextStyle(
+        fontSize: 14,
+        color: Colors.white70,
+        decoration: TextDecoration.none,
+      ),
       child: Builder(
         builder: (context) => Scaffold(
           appBar: AppBar(
@@ -27,12 +45,17 @@ class LoginPage extends StatelessWidget {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                 child: TextField(
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     prefixIcon: Icon(Icons.lock),
-                    suffixIcon: Icon(Icons.remove_red_eye),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                          isHidden ? Icons.visibility_off : Icons.visibility),
+                      onPressed: _toggleVisibility,
+                    ),
                     labelText: 'Password：',
                     hintText: 'Your github account password',
                   ),
+                  obscureText: isHidden,
                 ),
               ),
               SizedBox(height: 52),
@@ -44,6 +67,8 @@ class LoginPage extends StatelessWidget {
                   onPressed: () {
                     final progress = ProgressHUD.of(context);
                     progress.showWithText('Loading...');
+                    FocusScope.of(context).unfocus();
+
                     Future.delayed(Duration(seconds: 2), () {
                       Navigator.pushReplacementNamed(context, "/home");
                       progress.dismiss();
