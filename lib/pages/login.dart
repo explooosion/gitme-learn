@@ -30,54 +30,67 @@ class _LoginPageState extends State<StatefulWidget> {
             title: Text('Login'),
           ),
           body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 24),
               child: Column(
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                child: TextField(
-                  decoration: const InputDecoration(
-                    prefixIcon: Icon(Icons.person),
-                    labelText: 'Name：',
-                    hintText: 'Your github account username',
+                children: <Widget>[
+                  // Image.asset(
+                  //   "assets/images/avatar.png",
+                  //   width: MediaQuery.of(context).size.width / 4,
+                  // ),
+                  CircleAvatar(
+                    radius: 30,
+                    backgroundImage: AssetImage('assets/images/avatar.png'),
                   ),
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                child: TextField(
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.lock),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                          isHidden ? Icons.visibility_off : Icons.visibility),
-                      onPressed: _toggleVisibility,
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                    child: TextField(
+                      decoration: const InputDecoration(
+                        prefixIcon: Icon(Icons.person),
+                        labelText: 'Name：',
+                        hintText: 'Your github account username',
+                      ),
                     ),
-                    labelText: 'Password：',
-                    hintText: 'Your github account password',
                   ),
-                  obscureText: isHidden,
-                ),
-              ),
-              SizedBox(height: 52),
-              SizedBox(
-                width: MediaQuery.of(context).size.width - 48,
-                height: 48,
-                child: RaisedButton(
-                  child: Text('Login'),
-                  onPressed: () {
-                    final progress = ProgressHUD.of(context);
-                    progress.showWithText('Loading...');
-                    FocusScope.of(context).unfocus();
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.lock),
+                        suffixIcon: IconButton(
+                          icon: Icon(isHidden
+                              ? Icons.visibility_off
+                              : Icons.visibility),
+                          onPressed: _toggleVisibility,
+                        ),
+                        labelText: 'Password：',
+                        hintText: 'Your github account password',
+                      ),
+                      obscureText: isHidden,
+                    ),
+                  ),
+                  SizedBox(height: 52),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width - 48,
+                    height: 48,
+                    child: RaisedButton(
+                      child: Text('Login'),
+                      onPressed: () {
+                        final progress = ProgressHUD.of(context);
+                        progress.showWithText('Loading...');
+                        FocusScope.of(context).unfocus();
 
-                    Future.delayed(Duration(seconds: 2), () {
-                      Navigator.pushReplacementNamed(context, "/home");
-                      progress.dismiss();
-                    });
-                  },
-                ),
+                        Future.delayed(Duration(seconds: 2), () {
+                          Navigator.pushReplacementNamed(context, "/home");
+                          progress.dismiss();
+                        });
+                      },
+                    ),
+                  ),
+                ],
               ),
-            ],
-          )),
+            ),
+          ),
         ),
       ),
     );
