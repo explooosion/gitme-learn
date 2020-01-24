@@ -5,6 +5,7 @@ import 'package:my_app/pages/profile/profile.dart';
 import 'package:my_app/pages/trending/trending.dart';
 import 'package:my_app/pages/setting/setting.dart';
 import 'package:my_app/pages/setting/setting_language.dart';
+import 'package:my_app/pages/about.dart';
 import 'package:my_app/routes.dart';
 
 void main() => runApp(MyApp());
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
         MyAppRoutes.trending: (context) => TrendingPage(),
         MyAppRoutes.setting: (context) => SettingPage(),
         MyAppRoutes.settingLanguage: (context) => SettingLanguagePage(),   
+        MyAppRoutes.about: (context) => AboutPage(),   
       },
       onGenerateRoute: (settings) {
         switch (settings.name) {
