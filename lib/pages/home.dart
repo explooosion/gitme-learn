@@ -5,6 +5,8 @@ import 'package:my_app/pages/repo.dart';
 import 'package:my_app/pages/search.dart';
 import 'package:my_app/components/drawer_tile.dart';
 
+import 'package:hnpwa_client/hnpwa_client.dart';
+
 class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
