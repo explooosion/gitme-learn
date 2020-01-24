@@ -70,13 +70,12 @@ class MainPage extends StatelessWidget {
               DrawerTile(
                 icon: Icon(Icons.trending_up),
                 text: "Trending",
-                onPressed: () => Navigator.pushNamedAndRemoveUntil(
-                    context, "/trending", ModalRoute.withName('/')),
+                onPressed: () => Navigator.of(context).pushNamed("/trending"),
               ),
               DrawerTile(
                 icon: Icon(Icons.settings),
                 text: "Setting",
-                onPressed: () => print("Setting"),
+                onPressed: () => Navigator.of(context).pushNamed("/setting"),
               ),
               DrawerTile(
                 icon: Icon(Icons.info),

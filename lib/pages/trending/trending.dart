@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_app/pages/trending/project.dart';
 import 'package:my_app/pages/trending/developer.dart';
 
-class Trending extends StatelessWidget {
+class TrendingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(

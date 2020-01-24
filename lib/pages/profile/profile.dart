@@ -4,7 +4,7 @@ import 'package:my_app/pages/repo.dart';
 import 'package:my_app/pages/profile/follow.dart';
 
 
-class Profile extends StatelessWidget {
+class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(

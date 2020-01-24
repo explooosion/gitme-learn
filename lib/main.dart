@@ -3,6 +3,8 @@ import 'package:my_app/pages/login.dart';
 import 'package:my_app/pages/home.dart';
 import 'package:my_app/pages/profile/profile.dart';
 import 'package:my_app/pages/trending/trending.dart';
+import 'package:my_app/pages/setting/setting.dart';
+import 'package:my_app/pages/setting/setting_language.dart';
 import 'package:my_app/routes.dart';
 
 void main() => runApp(MyApp());
@@ -20,8 +22,10 @@ class MyApp extends StatelessWidget {
       routes: {
         MyAppRoutes.login: (context) => LoginPage(),
         MyAppRoutes.home: (context) => MainPage(),
-        MyAppRoutes.profile: (context) => Profile(),
-        MyAppRoutes.trending: (context) => Trending(),
+        MyAppRoutes.profile: (context) => ProfilePage(),
+        MyAppRoutes.trending: (context) => TrendingPage(),
+        MyAppRoutes.setting: (context) => SettingPage(),
+        MyAppRoutes.settingLanguage: (context) => SettingLanguagePage(),   
       },
       onGenerateRoute: (settings) {
         switch (settings.name) {
