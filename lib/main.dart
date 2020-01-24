@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/pages/login.dart';
 import 'package:my_app/pages/home.dart';
+import 'package:my_app/pages/profile/profile.dart';
 import 'package:my_app/routes.dart';
 
 void main() => runApp(MyApp());
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
       routes: {
         MyAppRoutes.login: (context) => LoginPage(),
         MyAppRoutes.home: (context) => MainPage(),
+        MyAppRoutes.profile: (context) => Profile(),
       },
       onGenerateRoute: (settings) {
         switch (settings.name) {

@@ -50,13 +50,21 @@ class MainPage extends StatelessWidget {
                 ),
                 accountName: Text("Robby Wu"),
                 accountEmail: Text("test@gmail.com"),
-                currentAccountPicture: CircleAvatar(
-                  backgroundImage: NetworkImage(
-                    "https://avatars3.githubusercontent.com/u/13682994?s=88&v=4",
+                currentAccountPicture: GestureDetector(
+                  child: CircleAvatar(
+                    backgroundImage: NetworkImage(
+                      "https://avatars2.githubusercontent.com/u/13682994?s=80&v=4",
+                    ),
                   ),
+                  onTap: () {
+                    Navigator.of(context).pushNamed("/profile");
+                  },
                 ),
                 otherAccountsPictures: <Widget>[
-                  Icon(Icons.edit, color: Colors.white),
+                  IconButton(
+                    icon: Icon(Icons.edit, color: Colors.white),
+                    onPressed: () {},
+                  ),
                 ],
               ),
               DrawerTile(
