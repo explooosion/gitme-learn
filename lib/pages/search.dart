@@ -172,8 +172,6 @@ class _SearchRepoResultState extends State<SearchResult> {
                           avatarUrl: snapshot.data[index].avatarUrl,
                           name: snapshot.data[index].login,
                         );
-                      default:
-                        return null;
                     }
                   },
                   separatorBuilder: (BuildContext context, int index) =>
@@ -186,7 +184,6 @@ class _SearchRepoResultState extends State<SearchResult> {
             case ConnectionState.none:
             case ConnectionState.active:
             case ConnectionState.waiting:
-            default:
               return Center(child: CircularProgressIndicator());
           }
         },

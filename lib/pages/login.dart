@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
+import 'package:my_app/services/github_api.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -8,6 +9,9 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<StatefulWidget> {
   bool isHidden = true;
+
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
 
   void _toggleVisibility() {
     setState(() {
@@ -45,6 +49,7 @@ class _LoginPageState extends State<StatefulWidget> {
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                     child: TextField(
+                      controller: usernameController,
                       decoration: const InputDecoration(
                         prefixIcon: Icon(Icons.person),
                         labelText: 'Name：',
@@ -55,6 +60,7 @@ class _LoginPageState extends State<StatefulWidget> {
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                     child: TextField(
+                      controller: passwordController,
                       decoration: InputDecoration(
                         prefixIcon: Icon(Icons.lock),
                         suffixIcon: IconButton(
@@ -78,12 +84,28 @@ class _LoginPageState extends State<StatefulWidget> {
                       onPressed: () {
                         final progress = ProgressHUD.of(context);
                         progress.showWithText('Loading...');
-                        FocusScope.of(context).unfocus();
+                        FocusScope.of(context).requestFocus(new FocusNode());
 
-                        Future.delayed(Duration(seconds: 2), () {
-                          Navigator.pushReplacementNamed(context, "/home");
+                        Future.delayed(Duration(milliseconds: 500), () async {
+                          try {
+                            githubClient = gitGithubApiClient(
+                              username: usernameController.text,
+                              password: passwordController.text,
+                            );
+                            await githubClient.users.getCurrentUser();
+                            Navigator.pushReplacementNamed(context, "/home");
+                            progress.dismiss();
+                          } catch (e) {
+                            print(e);
+                          }
                           progress.dismiss();
                         });
+                        // FocusScope.of(context).unfocus();
+
+                        // Future.delayed(Duration(seconds: 2), () {
+                        //   Navigator.pushReplacementNamed(context, "/home");
+                        //   progress.dismiss();
+                        // });
                       },
                     ),
                   ),

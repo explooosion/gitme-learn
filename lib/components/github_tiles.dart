@@ -59,3 +59,7 @@ class UserTile extends StatelessWidget {
     );
   }
 }
+
+// TODO: ActivityTile
+
+// TODO: IssueTile

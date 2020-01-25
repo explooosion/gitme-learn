@@ -2,7 +2,7 @@ import "package:flutter/material.dart";
 import 'package:my_app/components/profile/profile_info.dart';
 import 'package:my_app/pages/repo.dart';
 import 'package:my_app/pages/profile/follow.dart';
-
+import 'package:my_app/pages/profile/star.dart';
 
 class ProfilePage extends StatelessWidget {
   @override
@@ -55,9 +55,9 @@ class ProfilePage extends StatelessWidget {
             body: TabBarView(
               children: <Widget>[
                 RepoPage(),
-                RepoPage(),
-                FollowPage(),
-                FollowPage(),
+                StarRepoPage(),
+                FollowerPage(),
+                FollowingPage(),
               ],
             )),
       ),
