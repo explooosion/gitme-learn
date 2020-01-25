@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:my_app/pages/login.dart';
 import 'package:my_app/pages/home.dart';
 import 'package:my_app/pages/profile/profile.dart';
@@ -8,7 +9,10 @@ import 'package:my_app/pages/setting/setting_language.dart';
 import 'package:my_app/pages/about.dart';
 import 'package:my_app/routes.dart';
 
-void main() => runApp(MyApp());
+Future main() async {
+  await DotEnv().load('.env');
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -26,8 +30,8 @@ class MyApp extends StatelessWidget {
         MyAppRoutes.profile: (context) => ProfilePage(),
         MyAppRoutes.trending: (context) => TrendingPage(),
         MyAppRoutes.setting: (context) => SettingPage(),
-        MyAppRoutes.settingLanguage: (context) => SettingLanguagePage(),   
-        MyAppRoutes.about: (context) => AboutPage(),   
+        MyAppRoutes.settingLanguage: (context) => SettingLanguagePage(),
+        MyAppRoutes.about: (context) => AboutPage(),
       },
       onGenerateRoute: (settings) {
         switch (settings.name) {
