@@ -5,6 +5,8 @@ import 'package:my_app/pages/repo.dart';
 import 'package:my_app/pages/search.dart';
 import 'package:my_app/components/drawer_tile.dart';
 
+import 'package:my_app/utils.dart';
+
 import 'package:hnpwa_client/hnpwa_client.dart';
 
 class MainPage extends StatelessWidget {
@@ -122,40 +124,45 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final HnpwaClient hnClient = HnpwaClient();
+
+  List<FeedItem> _hnTops;
+  List<FeedItem> _hnNews;
+
   final List hnTops = [
-    {
-      "by": "jammygit",
-      "descendants": 18,
-      "title": "Pre-industrial workers had a shorter workweek than today's",
-    },
-    {
-      "by": "MaysonL",
-      "descendants": 2,
-      "title": "Help Advance the World with Advanced Linear Algebra",
-    },
-    {
-      "by": "xenocratus",
-      "descendants": 152,
-      "title": "Thoughts on Rust Bloat",
-    },
+    // {
+    //   "by": "jammygit",
+    //   "descendants": 18,
+    //   "title": "Pre-industrial workers had a shorter workweek than today's",
+    // },
+    // {
+    //   "by": "MaysonL",
+    //   "descendants": 2,
+    //   "title": "Help Advance the World with Advanced Linear Algebra",
+    // },
+    // {
+    //   "by": "xenocratus",
+    //   "descendants": 152,
+    //   "title": "Thoughts on Rust Bloat",
+    // },
   ];
 
   final List hnNews = [
-    {
-      "by": "rbanffy",
-      "descendants": 0,
-      "title": "Lost Nuclear Material Resurfaces in Maryland",
-    },
-    {
-      "by": "jakeprins",
-      "descendants": 0,
-      "title": "Find books that help you grow",
-    },
-    {
-      "by": "atlasunshrugged",
-      "descendants": 0,
-      "title": "America's Depressing New Culture War",
-    },
+    // {
+    //   "by": "rbanffy",
+    //   "descendants": 0,
+    //   "title": "Lost Nuclear Material Resurfaces in Maryland",
+    // },
+    // {
+    //   "by": "jakeprins",
+    //   "descendants": 0,
+    //   "title": "Find books that help you grow",
+    // },
+    // {
+    //   "by": "atlasunshrugged",
+    //   "descendants": 0,
+    //   "title": "America's Depressing New Culture War",
+    // },
   ];
 
   final List ghTrends = [
@@ -198,6 +205,21 @@ class _HomePageState extends State<HomePage> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  Future fetchData() async {
+    Feed hnNew = await hnClient.news();
+    Feed hnNewest = await hnClient.newest();
+    setState(() {
+      _hnTops = hnNew.items;
+      _hnNews = hnNewest.items;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
       child: ListView(
@@ -219,6 +241,39 @@ class _HomePageState extends State<HomePage> {
             height: 0,
           ),
           ...buildHNTopStories(context),
+          Container(
+            child: Divider(
+              height: 8.0,
+              color: Colors.grey[200],
+            ),
+            color: Colors.grey[200],
+          ),
+          ListTile(
+            dense: true,
+            title: Text('Hackernews News'),
+            trailing: Icon(Icons.chevron_right),
+            onTap: () {},
+          ),
+          Divider(
+            height: 0,
+          ),
+          ...buildHNNewStories(context),
+          Container(
+            child: Divider(
+              height: 8.0,
+              color: Colors.grey[200],
+            ),
+            color: Colors.grey[200],
+          ),
+          ListTile(
+            dense: true,
+            title: Text('Github Trending'),
+            trailing: Icon(Icons.chevron_right),
+            onTap: () {},
+          ),
+          Divider(
+            height: 0,
+          ),
           ...buildGHTrends(context),
         ],
       ),
@@ -237,31 +292,49 @@ class _HomePageState extends State<HomePage> {
   }
 
   buildHNTopStories(BuildContext context) {
-    return ListTile.divideTiles(
-            context: context,
-            tiles: hnTops.map((story) {
-              return ListTile(
-                title: Text(story["title"]),
-                subtitle: Text(
-                    "by ${story["by"]} | ${story["descendants"]} comments"),
-                onTap: () {},
-              );
-            }).toList())
-        .toList();
+    if (_hnTops == null) {
+      return [
+        Padding(
+          padding: EdgeInsets.all(16),
+          child: Center(child: CircularProgressIndicator()),
+        )
+      ];
+    } else {
+      return ListTile.divideTiles(
+              context: context,
+              tiles: _hnTops.sublist(0, 4).map((item) {
+                return ListTile(
+                  title: Text(item.title),
+                  subtitle:
+                      Text("by ${item.user} | ${item.commentsCount} comments"),
+                  onTap: () => launchUrl(item.url),
+                );
+              }).toList())
+          .toList();
+    }
   }
 
   buildHNNewStories(BuildContext context) {
-    return ListTile.divideTiles(
-            context: context,
-            tiles: hnNews.map((story) {
-              return ListTile(
-                title: Text(story["title"]),
-                subtitle: Text(
-                    "by ${story["by"]} | ${story["descendants"]} comments"),
-                onTap: () {},
-              );
-            }).toList())
-        .toList();
+    if (_hnNews == null) {
+      return [
+        Padding(
+          padding: EdgeInsets.all(16),
+          child: Center(child: CircularProgressIndicator()),
+        )
+      ];
+    } else {
+      return ListTile.divideTiles(
+              context: context,
+              tiles: _hnNews.sublist(0, 4).map((item) {
+                return ListTile(
+                  title: Text(item.title),
+                  subtitle:
+                      Text("by ${item.user} | ${item.commentsCount} comments"),
+                  onTap: () => launchUrl(item.url),
+                );
+              }).toList())
+          .toList();
+    }
   }
 
   buildGHTrends(BuildContext context) {
