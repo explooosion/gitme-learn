@@ -58,6 +58,7 @@ class _IssuePageState extends State<IssuePage> {
               case ConnectionState.none:
               case ConnectionState.active:
               case ConnectionState.waiting:
+              default:
                 return Center(child: CircularProgressIndicator());
             }
           },
